@@ -52,6 +52,11 @@ When a route has nested children (e.g. `app/example/page.tsx` + `app/example/[id
 
 Worked example: `components/pages/example/list/` + `hooks/usePostsListLogic.ts`, `components/pages/example/detail/` + `hooks/usePostDetailLogic.ts`.
 
+## Route groups: `(main)` vs `example`
+
+- **`app/(main)/`** is a [route group](https://nextjs.org/docs/app/api-reference/file-conventions/route-groups) — it's omitted from the URL, so `app/(main)/page.tsx` serves `/`. This is where your actual application starts. Right now it's a minimal placeholder (`components/pages/main/`); replace it with real content.
+- **`app/example/`** (`/example`, `/example/[id]`) is reference code, not a real feature. It exists purely to demonstrate the Desktop/Mobile split + section composition pattern end-to-end (`components/pages/example/list/`, `components/pages/example/detail/`, `hooks/usePostsListLogic.ts`, `hooks/usePostDetailLogic.ts`, `constants/posts.ts`, `types/post.ts`). Once you've internalized the pattern, delete `app/example/` and its supporting files rather than building real features inside it.
+
 ## Section-based modularization
 
 Per page-route, sections live in `components/pages/<page-name>/sections/`, one file per logical section, PascalCase, suffixed `Section`:
@@ -87,12 +92,40 @@ Worked example:
 ## Shared infra layout
 
 - `components/pages/` — page-route folders (`components/pages/<page-name>/`), one per route; see Desktop/Mobile split above.
-- `components/common/` — shared UI primitives (e.g. `Badge.tsx`), domain-agnostic and reusable across pages.
-- `components/ui/` — design-system primitives (buttons, dialogs, modals, etc.), also domain-agnostic.
+- `components/common/` — shared UI primitives (e.g. `Badge.tsx`, `AsyncBoundary`, `DeferredComponent`), domain-agnostic and reusable across pages.
+- `components/ui/` — the design-system primitives (Button, Dialog, AlertDialog, Popover, Tooltip, Command palette, Combobox, Modal/ConfirmModal, Notify/toast, Table/SortableTable, icons, etc.), also domain-agnostic. See "Design system" below.
 - `hooks/` — flat; page-level hooks (`use<PageName>Logic.ts`) and any future cross-page hooks live together.
 - `types/` — one file per domain concept (`types/post.ts`), not per-page.
 - `constants/` — one file per domain concept holding actual constant data (`constants/posts.ts`), replacing the reference's pattern of inlining constants inside hooks.
-- `lib/` — pure helper functions only, no React (`lib/formatDate.ts`).
+- `lib/` — pure helper functions only, no React (`lib/formatDate.ts`, `lib/utils.ts`'s `cn()` classname merger).
+
+## Design system (`components/ui/`)
+
+`components/ui/` was ported wholesale from an internal Vite/React admin template (shadcn "new-york" style, Radix UI primitives). It brought its own dependencies (`@radix-ui/*`, `cmdk`, `@dnd-kit/*`, `react-toastify`, `react-focus-lock`, `overlay-kit`, `react-error-boundary`, `tw-animate-css`) and its own design tokens, all defined in `app/globals.css` under `@theme`/`:root`:
+
+- A custom color palette (`primary-main-blue`, `gray-100`–`800`, etc.) and a compound font-size scale (`text-font-16-500`, meaning 16px/weight 500 in one utility class) — both ported as-is from the source admin template.
+- A custom `z-*` scale (`z-modal`, `z-dialog`, `z-popover`, ...) and a few named box-shadows (`shadow-pop-over`, `shadow-notify-success`, ...).
+- shadcn-standard neutral tokens (`background`, `foreground`, `popover`, `border`, `muted`, `accent`, `primary`, `ring`, each with a `-foreground` pair) that the Radix-based components (`dialog.tsx`, `popover.tsx`, `command.tsx`, `table.tsx`, ...) are built on.
+
+`components.json` is present so the shadcn CLI can add more primitives later (`npx shadcn add <name>` — set `aliases.ui` to `@/components/ui`).
+
+**Known gap:** `components/ui/*`'s own custom palette (`primary-main-blue`, `gray-*`, etc.) is static and does not react to dark mode — it wasn't designed with theming in mind in the source template. Only the shadcn neutral tokens (`background`/`foreground`/`popover`/`border`/`muted`/`accent`) are dark-mode aware. Keep this in mind if you restyle these components.
+
+## Theming and dark mode
+
+Dark mode is automatic via the `prefers-color-scheme: dark` media query in `app/globals.css` (no manual toggle, no `next-themes`, no `.dark` class). `:root` defines light values; a `@media (prefers-color-scheme: dark)` block overrides the same variables for dark.
+
+**Always style with the semantic tokens, never hardcoded Tailwind grays**, or the element won't react to theme changes:
+
+| Use | Not |
+|---|---|
+| `bg-background` | `bg-white` |
+| `text-foreground` | `text-black`, `text-zinc-900` |
+| `text-muted-foreground` | `text-zinc-500`, `text-gray-400` |
+| `border-border` | `border-zinc-200` |
+| `bg-popover` / `text-popover-foreground` | `bg-white` / `text-black` |
+
+This bit us once already: `components/pages/example/**` was originally written with hardcoded `text-zinc-*`/`border-zinc-*` classes, so its background/borders followed dark mode (they used tokens) but its text didn't (it didn't) — now fixed to use the tokens above. Brand/accent colors that are meant to look the same in both themes (e.g. `indigo-600` link color, `Badge`'s `indigo-50`/`indigo-700`) are a deliberate exception — leave those as static Tailwind colors.
 
 ## Note on page-level hooks and `"use client"`
 

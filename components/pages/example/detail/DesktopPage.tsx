@@ -5,7 +5,7 @@ import type { UsePostDetailLogicResult as PostDetailPageProps } from "@/hooks/us
 export default function DesktopPage({ post }: PostDetailPageProps) {
   if (!post) {
     return (
-      <div className="mx-auto w-full max-w-3xl px-8 py-10 text-sm text-zinc-500">
+      <div className="mx-auto w-full max-w-3xl px-8 py-10 text-sm text-muted-foreground">
         Post not found.
       </div>
     );

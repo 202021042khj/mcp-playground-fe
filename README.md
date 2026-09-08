@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# khj-fe-template
 
-## Getting Started
+Personal Next.js App Router starter template — a scaffold to clone for new frontend projects, with an opinionated architecture convention and a ported design system already wired up.
 
-First, run the development server:
+## Tech stack
+
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack)
+- [React 19](https://react.dev)
+- [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS v4](https://tailwindcss.com) (CSS-first config — no `tailwind.config.*`, tokens live in `app/globals.css`)
+
+> This is a recent/unusual Next.js version. Before writing Next.js-specific code (routing, config, etc.), check `node_modules/next/dist/docs/` — see `AGENTS.md`.
+
+## Getting started
 
 ```bash
 npm run dev
 # or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run build` — production build
+- `npm run start` — run the production build
+- `npm run lint` — ESLint
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+app/
+├── layout.tsx        # root layout (fonts, <NotifyContainer />)
+├── globals.css        # Tailwind v4 tokens + design system tokens
+├── (main)/            # route group → "/", your real app starts here
+└── example/            # reference pages only, see below → "/example", "/example/[id]"
 
-To learn more about Next.js, take a look at the following resources:
+components/
+├── pages/             # page-route components, mirrors the app/ route tree
+├── ui/                # ported design system (Button, Dialog, Modal, Notify, Table, ...)
+└── common/            # shared, domain-agnostic primitives (Badge, AsyncBoundary, ...)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+hooks/                 # page-level + shared hooks (flat)
+lib/                   # pure helpers, no React (formatDate, cn())
+types/                 # one file per domain concept
+constants/             # one file per domain concept
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Full conventions (naming, Desktop/Mobile split, section modularization, theming rules) are documented in **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — read it before adding a new page or component.
 
-## Deploy on Vercel
+`app/example/` is not a real feature — it's worked reference code showing the page pattern end to end. Once you're familiar with it, delete `app/example/` (and its supporting `hooks/usePostsListLogic.ts`, `hooks/usePostDetailLogic.ts`, `constants/posts.ts`, `types/post.ts`) and build your real pages under `app/(main)/`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Design system
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`components/ui/` is a design system ported from an internal admin template: Button, Dialog, AlertDialog, Popover, Tooltip, Command palette, Combobox, Modal/ConfirmModal, Notify (toast), Table/SortableTable, and a small icon set — Radix UI + shadcn "new-york" style underneath. `components.json` is set up so the shadcn CLI can add more (`npx shadcn add <name>`).
+
+Dark mode is automatic (`prefers-color-scheme`, no manual toggle). Always use semantic tokens (`bg-background`, `text-foreground`, `text-muted-foreground`, `border-border`, ...) instead of hardcoded Tailwind grays so components stay theme-aware — see the Theming section in `docs/ARCHITECTURE.md` for the full rationale and a known gap in the ported kit's own color palette.
+
+## Learn more
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs)

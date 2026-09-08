@@ -10,7 +10,7 @@ interface PostListSectionProps {
 export default function PostListSection({ posts }: PostListSectionProps) {
   if (posts.length === 0) {
     return (
-      <div className="px-4 py-10 text-center text-sm text-zinc-500 md:px-8">
+      <div className="px-4 py-10 text-center text-sm text-muted-foreground md:px-8">
         No posts match your search.
       </div>
     );
@@ -22,16 +22,16 @@ export default function PostListSection({ posts }: PostListSectionProps) {
         <Link
           key={post.id}
           href={`/example/${post.id}`}
-          className="flex flex-col gap-2 rounded-lg border border-zinc-200 p-4 transition hover:border-indigo-300 hover:shadow-sm"
+          className="flex flex-col gap-2 rounded-lg border border-border p-4 transition hover:border-indigo-300 hover:shadow-sm"
         >
           <Badge label={post.category} />
-          <h2 className="text-base font-semibold text-zinc-900">
+          <h2 className="text-base font-semibold text-foreground">
             {post.title}
           </h2>
-          <p className="line-clamp-2 text-sm text-zinc-500">
+          <p className="line-clamp-2 text-sm text-muted-foreground">
             {post.excerpt}
           </p>
-          <span className="mt-auto text-xs text-zinc-400">
+          <span className="mt-auto text-xs text-muted-foreground">
             {formatDate(post.publishedAt)}
           </span>
         </Link>

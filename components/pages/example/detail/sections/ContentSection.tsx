@@ -10,7 +10,7 @@ export default function ContentSection({ post }: ContentSectionProps) {
       {post.body.map((paragraph, index) => (
         <p
           key={index}
-          className="text-sm leading-relaxed text-zinc-700 md:text-base"
+          className="text-sm leading-relaxed text-foreground md:text-base"
         >
           {paragraph}
         </p>

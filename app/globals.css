@@ -252,19 +252,20 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* mid-gray instead of near-black, for a softer dark surface */
+    --background: #282828;
+    --foreground: #f4f4f5;
 
-    --popover: #0a0a0a;
+    --popover: #282828;
     --popover-foreground: #fafafa;
     --primary: #fafafa;
-    --primary-foreground: #171717;
-    --border: #262626;
-    --input: #262626;
-    --ring: #737373;
-    --muted: #262626;
-    --muted-foreground: #a3a3a3;
-    --accent: #262626;
+    --primary-foreground: #262626;
+    --border: #4a4a4a;
+    --input: #4a4a4a;
+    --ring: #8a8a8a;
+    --muted: #4a4a4a;
+    --muted-foreground: #b5b5b5;
+    --accent: #4a4a4a;
     --accent-foreground: #fafafa;
   }
 }
