@@ -61,6 +61,18 @@
   --color-color-A3ACB4: #a3acb4;
   --color-color-D9DBDE: #d9dbde;
 
+  /* landing page palette (from Figma "playground" variables) */
+  --color-brand: #4f46e5;
+  --color-brand-subtle: #eef2ff;
+  --color-surface-subtle: #f8fafc;
+  --color-line: #e2e8f0;
+  --color-ink: #0f172a;
+  --color-ink-secondary: #475569;
+  --color-night: #0f172a;
+  --color-night-muted: #94a3b8;
+  --color-night-line: #1e293b;
+  --shadow-preview: 0px 24px 48px -12px rgba(15, 23, 41, 0.12);
+
   /* custom font sizes (ported from admin-template src/styles/texts.ts) */
   --text-font-40-500: 40px;
   --text-font-40-500--line-height: normal;

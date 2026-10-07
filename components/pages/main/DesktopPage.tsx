@@ -1,15 +1,17 @@
-import DesktopScrollShowcaseSection from "@/components/pages/main/sections/DesktopScrollShowcaseSection";
+import DesktopFeaturesSection from "@/components/pages/main/sections/DesktopFeaturesSection";
+import FooterSection from "@/components/pages/main/sections/FooterSection";
+import HeaderSection from "@/components/pages/main/sections/HeaderSection";
+import HeroSection from "@/components/pages/main/sections/HeroSection";
+import PricingSection from "@/components/pages/main/sections/PricingSection";
 
 export default function DesktopPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="flex flex-col items-center justify-center gap-2 py-24 text-center">
-        <h1 className="text-3xl font-semibold text-foreground">Home</h1>
-        <p className="text-sm text-muted-foreground">
-          Scroll down to see a pinned scroll-scrubbed section.
-        </p>
-      </div>
-      <DesktopScrollShowcaseSection />
+    <div className="flex flex-1 flex-col bg-white font-[family-name:var(--font-inter)]">
+      <HeaderSection />
+      <HeroSection />
+      <DesktopFeaturesSection />
+      <PricingSection />
+      <FooterSection />
     </div>
   );
 }
