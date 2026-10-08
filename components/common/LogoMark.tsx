@@ -1,12 +1,15 @@
+import Link from "next/link";
+
 import { cn } from "@/lib/utils";
 
 interface Props {
   inverse?: boolean;
+  href?: string;
 }
 
-export default function LogoMark({ inverse }: Props) {
-  return (
-    <div className="flex items-center gap-2">
+export default function LogoMark({ inverse, href }: Props) {
+  const logo = (
+    <>
       <div className="flex size-8 items-center justify-center rounded-lg bg-brand text-base font-bold text-white">
         F
       </div>
@@ -18,6 +21,16 @@ export default function LogoMark({ inverse }: Props) {
       >
         Flowly
       </span>
-    </div>
+    </>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="flex items-center gap-2">
+        {logo}
+      </Link>
+    );
+  }
+
+  return <div className="flex items-center gap-2">{logo}</div>;
 }

@@ -5,7 +5,12 @@ import type {
   Stat,
 } from "@/types/landing";
 
-export const NAV_LINKS = ["Features", "Pricing", "Customers", "Docs"];
+export const NAV_LINKS: { label: string; section?: string }[] = [
+  { label: "Features", section: "features" },
+  { label: "Pricing", section: "pricing" },
+  { label: "Customers" },
+  { label: "Docs" },
+];
 
 export const PREVIEW_STATS: Stat[] = [
   { label: "Workflows run", value: "128,430" },

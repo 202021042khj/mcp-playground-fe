@@ -8,7 +8,7 @@ import { FEATURES } from "@/constants/landing";
 
 export default function MobileFeaturesSection() {
   return (
-    <section className="flex flex-col items-center gap-16 bg-white px-6 py-16">
+    <section data-section="features" className="flex flex-col items-center gap-16 bg-white px-6 py-16">
       <SectionHeader
         eyebrow="FEATURES"
         title="Everything your team needs to move faster"

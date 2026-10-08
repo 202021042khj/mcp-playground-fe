@@ -1,13 +1,15 @@
 import Image from "next/image";
-
 import SectionHeader from "@/components/common/SectionHeader";
 import Button from "@/components/ui/button";
+import LinkButton from "@/components/ui/link-button";
 import { PRICING_PLANS } from "@/constants/landing";
 import { cn } from "@/lib/utils";
 
 export default function PricingSection() {
   return (
-    <section className="flex flex-col items-center gap-16 bg-surface-subtle px-6 py-16 md:py-24 lg:px-[120px]">
+    <section
+      data-section="pricing"
+      className="flex flex-col items-center gap-16 bg-surface-subtle px-6 py-16 md:py-24 lg:px-[120px]">
       <SectionHeader
         eyebrow="PRICING"
         title="Simple pricing that scales with you"
@@ -44,9 +46,21 @@ export default function PricingSection() {
               </span>
             </div>
             {plan.featured ? (
-              <Button className="h-12 w-full rounded-lg bg-brand px-6 text-base leading-6 font-semibold hover:bg-brand/90">
+              <LinkButton
+                href="/signup"
+                className="h-12 w-full rounded-lg bg-brand px-6 text-base leading-6 font-semibold hover:bg-brand/90"
+              >
                 {plan.cta}
-              </Button>
+              </LinkButton>
+            ) : plan.name === "Starter" ? (
+              <LinkButton
+                href="/signup"
+                variant="outlined"
+                color="black"
+                className="h-[50px] w-full rounded-lg border-line px-6 text-base leading-6 font-semibold text-ink hover:bg-surface-subtle"
+              >
+                {plan.cta}
+              </LinkButton>
             ) : (
               <Button
                 variant="outlined"

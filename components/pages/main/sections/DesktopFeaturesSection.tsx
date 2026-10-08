@@ -20,7 +20,10 @@ export default function DesktopFeaturesSection() {
   });
 
   return (
-    <section ref={wrapperRef} className="relative h-[250vh] bg-white">
+    <section
+      ref={wrapperRef}
+      data-section="features"
+      className="relative h-[250vh] bg-white">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-16 overflow-hidden px-6 lg:px-[120px]">
         <SectionHeader
           eyebrow="FEATURES"

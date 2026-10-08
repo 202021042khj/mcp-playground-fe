@@ -1,6 +1,6 @@
 import Image from "next/image";
-
 import Button from "@/components/ui/button";
+import LinkButton from "@/components/ui/link-button";
 import {
   PREVIEW_BAR_HEIGHTS,
   PREVIEW_SIDEBAR_WIDTHS,
@@ -24,9 +24,12 @@ export default function HeroSection() {
           team real-time visibility — all without writing code.
         </p>
         <div className="flex flex-wrap items-start justify-center gap-3">
-          <Button className="h-12 rounded-lg bg-brand px-6 text-base leading-6 font-semibold hover:bg-brand/90">
+          <LinkButton
+            href="/signup"
+            className="h-12 rounded-lg bg-brand px-6 text-base leading-6 font-semibold hover:bg-brand/90"
+          >
             Start free trial
-          </Button>
+          </LinkButton>
           <Button
             variant="outlined"
             color="black"
